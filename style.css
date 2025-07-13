@@ -1,0 +1,482 @@
+/* CSS Variables for Dark/Light Mode */
+:root {
+  --bg-color-dark: rgba(20, 20, 30, 0.95);
+  --card-bg-dark: rgba(30, 30, 45, 0.8);
+  --text-color-dark: #e0e0e0;
+  --heading-color-dark: #00c6ff;
+  --border-color-dark: rgba(255, 255, 255, 0.15);
+  --shadow-color-dark: rgba(0, 0, 0, 0.5);
+  --btn-gradient-dark-1: #00c6ff;
+  --btn-gradient-dark-2: #0072ff;
+  --profile-border-dark: #00c6ff;
+  --profile-shadow-dark: rgba(0, 198, 255, 0.6);
+
+  --bg-color-light: rgba(240, 240, 250, 0.95);
+  --card-bg-light: rgba(255, 255, 255, 0.9);
+  --text-color-light: #333;
+  --heading-color-light: #2c3e50;
+  --border-color-light: rgba(0, 0, 0, 0.1);
+  --shadow-color-light: rgba(0, 0, 0, 0.2);
+  --btn-gradient-light-1: #3498db;
+  --btn-gradient-light-2: #2980b9;
+  --profile-border-light: #3498db;
+  --profile-shadow-light: rgba(52, 152, 219, 0.6);
+
+  /* Default to Dark Mode */
+  --current-bg-color: var(--bg-color-dark);
+  --current-card-bg: var(--card-bg-dark);
+  --current-text-color: var(--text-color-dark);
+  --current-heading-color: var(--heading-color-dark);
+  --current-border-color: var(--border-color-dark);
+  --current-shadow-color: var(--shadow-color-dark);
+  --current-btn-gradient-1: var(--btn-gradient-dark-1);
+  --current-btn-gradient-2: var(--btn-gradient-dark-2);
+  --current-profile-border: var(--profile-border-dark);
+  --current-profile-shadow: var(--profile-shadow-dark);
+}
+
+/* Light Mode Active */
+body.light-mode {
+  --current-bg-color: var(--bg-color-light);
+  --current-card-bg: var(--card-bg-light);
+  --current-text-color: var(--text-color-light);
+  --current-heading-color: var(--heading-color-light);
+  --current-border-color: var(--border-color-light);
+  --current-shadow-color: var(--shadow-color-light);
+  --current-btn-gradient-1: var(--btn-gradient-light-1);
+  --current-btn-gradient-2: var(--btn-gradient-light-2);
+  --current-profile-border: var(--profile-border-light);
+  --current-profile-shadow: var(--profile-shadow-light);
+}
+
+/* Basic Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  height: 100%;
+  font-family: 'Open Sans', sans-serif; /* Body text font */
+  color: var(--current-text-color);
+  overflow-x: hidden; /* Prevent horizontal scroll */
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* Background Video & Overlay */
+video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  min-height: 100%;
+  object-fit: cover;
+  z-index: -3; /* Further back than overlay */
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--current-bg-color); /* Uses variable */
+  z-index: -2;
+  transition: background 0.5s ease;
+}
+
+/* Header/Navigation */
+header {
+  position: fixed;
+  width: 100%;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--current-card-bg); /* Use card background for header */
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--current-border-color);
+  z-index: 1000; /* On top of everything */
+  box-shadow: 0 2px 10px var(--current-shadow-color);
+  transition: background 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
+}
+
+.logo {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.8em;
+  font-weight: 700;
+  color: var(--current-heading-color);
+  text-decoration: none;
+}
+
+.nav-menu ul {
+  list-style: none;
+  display: flex;
+}
+
+.nav-menu ul li {
+  margin-left: 30px;
+}
+
+.nav-menu ul li a {
+  color: var(--current-text-color);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1em;
+  transition: color 0.3s ease;
+  position: relative;
+  padding-bottom: 5px;
+}
+
+.nav-menu ul li a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  background: var(--current-heading-color);
+  left: 0;
+  bottom: 0;
+  transition: width 0.3s ease;
+}
+
+.nav-menu ul li a:hover::after,
+.nav-menu ul li a.active::after {
+  width: 100%;
+}
+
+.nav-menu ul li a:hover {
+  color: var(--current-heading-color);
+}
+
+/* Dark/Light Mode Toggle */
+.theme-toggle {
+  background: var(--current-btn-gradient-1);
+  border: none;
+  border-radius: 50px;
+  padding: 10px 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1em;
+  color: white;
+  transition: background 0.3s ease;
+}
+
+.theme-toggle:hover {
+  background: var(--current-btn-gradient-2);
+}
+
+.theme-toggle i {
+  margin-right: 8px;
+}
+
+/* New CSS for Mobile Navigation Toggle */
+.menu-toggle {
+  display: none; /* Hidden by default on larger screens */
+  background: none;
+  border: none;
+  font-size: 1.8em;
+  color: var(--current-heading-color);
+  cursor: pointer;
+  z-index: 1001; /* Ensure it's above other elements */
+  transition: color 0.3s ease;
+}
+
+.menu-toggle:hover {
+  color: var(--current-btn-gradient-2);
+}
+
+/* Main Content Sections */
+.section {
+  min-height: 100vh; /* Each section takes full viewport height */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px; /* Adjust for header */
+  text-align: center;
+  position: relative;
+  z-index: 1; /* Above overlay, below header */
+  opacity: 0; /* Initial state for scroll animation */
+  transform: translateY(50px); /* Initial state for scroll animation */
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.section-content {
+  background: var(--current-card-bg);
+  border-radius: 20px;
+  padding: 40px 30px;
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--current-border-color);
+  max-width: 900px; /* Wider card */
+  width: 100%;
+  box-shadow: 0 10px 30px var(--current-shadow-color);
+  transition: background 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
+}
+
+/* Hero Section */
+#home .profile-pic {
+  width: 160px; /* Slightly larger profile pic */
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 5px solid var(--current-profile-border);
+  margin-bottom: 25px;
+  box-shadow: 0 0 20px var(--current-profile-shadow);
+  transition: border-color 0.5s ease, box-shadow 0.5s ease;
+}
+
+#home h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 3.5em; /* Larger heading */
+  margin-bottom: 15px;
+  color: var(--current-heading-color);
+  transition: color 0.5s ease;
+}
+
+#home p {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.25em; /* Larger body text */
+  margin-bottom: 30px;
+  line-height: 1.7;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.telegram-btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 15px 35px;
+  background: linear-gradient(135deg, var(--current-btn-gradient-1), var(--current-btn-gradient-2));
+  border: none;
+  border-radius: 50px;
+  color: white;
+  font-size: 1.2em;
+  text-decoration: none;
+  transition: all 0.4s ease;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.telegram-btn:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* About Section */
+#about .info-box {
+  text-align: left;
+  margin-top: 30px;
+  padding: 20px 25px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05); /* Slightly different background for info boxes */
+  border: 1px solid var(--current-border-color);
+}
+
+#about .info-box h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.8em;
+  margin-bottom: 15px;
+  color: var(--current-heading-color);
+  border-bottom: 1px solid var(--current-border-color);
+  padding-bottom: 10px;
+  transition: color 0.5s ease, border-color 0.5s ease;
+}
+
+#about .info-box ul {
+  list-style: none;
+  padding: 0;
+  line-height: 2.2;
+}
+
+#about .info-box ul li {
+  position: relative;
+  padding-left: 30px;
+  margin-bottom: 5px;
+}
+
+#about .info-box ul li strong {
+  color: var(--current-heading-color);
+}
+
+#about .info-box ul li::before {
+  content: "›";
+  position: absolute;
+  left: 0;
+  color: var(--current-heading-color);
+  font-weight: bold;
+  font-size: 1.4em;
+}
+
+/* Skills Section */
+#skills .skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin-top: 30px;
+  width: 100%;
+}
+
+#skills .skill-item {
+  background: rgba(255, 255, 255, 0.08); /* Slightly lighter for skills items */
+  border-radius: 15px;
+  padding: 25px;
+  border: 1px solid var(--current-border-color);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.5s ease, border-color 0.5s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#skills .skill-item:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px var(--current-shadow-color);
+}
+
+#skills .skill-item i {
+  font-size: 3em;
+  color: var(--current-heading-color);
+  margin-bottom: 15px;
+  transition: color 0.5s ease;
+}
+
+#skills .skill-item h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.4em;
+  color: var(--current-heading-color);
+  transition: color 0.5s ease;
+}
+
+/* Footer */
+footer {
+  padding: 30px 20px;
+  font-size: 0.95em;
+  color: var(--current-text-color);
+  text-align: center;
+  background: var(--current-card-bg); /* Use card background for footer */
+  border-top: 1px solid var(--current-border-color);
+  z-index: 1; /* Ensure footer is above overlay */
+  transition: background 0.5s ease, border-color 0.5s ease, color 0.5s ease;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+  header {
+    padding: 15px 20px;
+  }
+  .logo {
+    font-size: 1.5em;
+  }
+  .nav-menu ul li {
+    margin-left: 20px;
+  }
+  .nav-menu ul li a {
+    font-size: 1em;
+  }
+  #home h1 {
+    font-size: 3em;
+  }
+  #home p {
+    font-size: 1.1em;
+  }
+  .section-content {
+    padding: 30px 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  header {
+    flex-direction: row; /* Keep logo, toggle, and theme toggle in one row */
+    justify-content: space-between; /* Space them out */
+    align-items: center;
+    padding: 15px 20px; /* Adjust padding */
+  }
+
+  .logo {
+    margin-right: auto; /* Push logo to the left */
+  }
+
+  .menu-toggle {
+    display: block; /* Show hamburger on smaller screens */
+    order: 2; /* Position it before theme toggle, after logo */
+  }
+
+  .theme-toggle {
+    margin-top: 0; /* Remove top margin from previous mobile style */
+    margin-left: 20px; /* Add some space from the toggle */
+    order: 3; /* Position it after the hamburger */
+  }
+
+  .nav-menu {
+    position: absolute; /* Take out of flow */
+    top: 70px; /* Position below header */
+    left: 0;
+    width: 100%;
+    background: var(--current-card-bg); /* Match header background */
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--current-border-color);
+    box-shadow: 0 5px 15px var(--current-shadow-color);
+    padding: 20px 0;
+    transform: translateY(-100%); /* Start off-screen (hidden) */
+    transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+    opacity: 0; /* Also fade it in/out */
+    pointer-events: none; /* Disable interaction when hidden */
+    display: flex; /* Ensure flex behavior when shown */
+    flex-direction: column;
+    align-items: center;
+    z-index: 999; /* Below header, above content */
+  }
+
+  .nav-menu.active {
+    transform: translateY(0); /* Slide into view */
+    opacity: 1; /* Fade in */
+    pointer-events: all; /* Enable interaction */
+  }
+
+  .nav-menu ul {
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+  }
+
+  .nav-menu ul li {
+    margin: 15px 0; /* More spacing for vertical links */
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 60px 15px;
+  }
+  #home h1 {
+    font-size: 2em;
+  }
+  #home p {
+    font-size: 0.9em;
+  }
+  .telegram-btn {
+    padding: 12px 25px;
+    font-size: 1em;
+  }
+  #skills .skills-grid {
+    grid-template-columns: 1fr; /* Single column on very small screens */
+  }
+  .theme-toggle {
+    font-size: 0.9em;
+    padding: 8px 12px;
+  }
+}
